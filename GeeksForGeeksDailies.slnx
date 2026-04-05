@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Console/Console.csproj" />
+  <Project Path="DailySolutions/DailySolutions.csproj" />
+</Solution>
