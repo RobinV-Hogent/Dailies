@@ -1,6 +1,8 @@
 ﻿// Robin Vermeir | Started: 05-04-2026
 
 using System.Linq.Expressions;
+using System.Xml.Linq;
+using static System.Net.WebRequestMethods;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DailySolutions
@@ -30,6 +32,91 @@ namespace DailySolutions
             }
 
             return totalSolutions;
+        }
+
+
+
+        // Huffman Codes | 06-04-2026 | Day 2
+        // Given a string s of distinct characters and their corresponding frequency f[] i.e.character s[i] has f[i] frequency.
+        // You need to build the Huffman tree and return all the huffman codes in preorder traversal of the tree.
+        // Note: While merging if two nodes have the same value, then the node which occurs at first 
+        // will be taken on the left of Binary Tree and the other one to the right, otherwise Node with less value will be 
+        // taken on the left of the subtree and other one to the right.
+        public static List<string> huffmanCodes(string s, int[] f)
+        {
+            int totalFrequencies = f.Sum();
+            int total = -1;
+
+            var currentElements = new List<(int Total, object Small, object Big, string? Letter)>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                currentElements.Add((Total: f[i], Small: null!, Big: null!, Letter: s[i].ToString()));
+            }
+
+            var sorted = currentElements.OrderBy(e => e.Total).ToList();
+            do
+            {
+                var smallest = sorted[0];
+                var bigger = sorted[1];
+
+                total = smallest.Total + bigger.Total;
+
+                var node = (Total: total, Small: smallest, Big: bigger, Letter: "");
+
+                sorted = sorted[2..].ToList();
+                sorted.Add(node);
+                sorted = sorted.OrderBy(e => e.Total).ToList();
+
+            } while (total != totalFrequencies);
+
+            var codeMap = new Dictionary<string, string>();
+
+            void ReadNode((int Total, object Small, object Big, string? Letter) node, string currentCode)
+            {
+                if (node.Small == null && node.Big == null)
+                {
+                    if (!string.IsNullOrEmpty(node.Letter))
+                    {
+                        codeMap[node.Letter] = currentCode;
+                    }
+                    return;
+                }
+
+                if (node.Small != null)
+                {
+                    var smallNode = ((int Total, object Small, object Big, string? Letter))node.Small;
+                    ReadNode(smallNode, currentCode + "0");
+                }
+
+                if (node.Big != null)
+                {
+                    var bigNode = ((int Total, object Small, object Big, string? Letter))node.Big;
+                    ReadNode(bigNode, currentCode + "1");
+                }
+            }
+
+            ReadNode(sorted[0], "");
+
+            var sortedLetters = new List<(string Letter, int Frequency)>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                sortedLetters.Add((s[i].ToString(), f[i]));
+            }
+
+            var finalOrder = sortedLetters.OrderByDescending(x => x.Frequency).ToList();
+
+            List<string> codes = new List<string>();
+            foreach (var item in finalOrder)
+            {
+                if (codeMap.TryGetValue(item.Letter, out string? code))
+                {
+                    codes.Add(code);
+                }
+            }
+
+            Console.WriteLine(string.Join(", ", codes));
+
+            return codes;
         }
     }
 }
