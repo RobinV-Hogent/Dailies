@@ -1,6 +1,7 @@
 ﻿// Robin Vermeir | Started: 05-04-2026
 
 using System.Buffers.Text;
+using System.Drawing;
 using System.Linq.Expressions;
 using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
@@ -12,8 +13,36 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Segregate 0s and 1s | 08-04-2026 | Day 4
+        // Given an array arr[] consisting of only 0's and 1's.Modify the array in-place to segregate 0s 
+        // onto the left side and 1s onto the right side of the array.
+        public static void segregate0and1(int[] arr)
+        {
+            // code here    
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 1 || i == 0) continue;
+
+                // if arr[i] = 0
+                int index = i;
+                while (!(index - 1 < 0) && arr[index - 1] == 1)
+                {
+                    int current = arr[index];
+                    int left = arr[index - 1];
+
+                    arr[index] = left;
+                    arr[index - 1] = current;
+
+                    index--;
+                }
+            }
+
+            Console.WriteLine(string.Join(", ", arr));
+        }
+
         // Stable Marriage Problem | 07-04-2026 | Day 3
-        // Coult not solve
+        // Could not solve
+        // YT video: https://www.youtube.com/watch?v=Qcv1IqHWAzg
 
 
         // Huffman Codes | 06-04-2026 | Day 2
