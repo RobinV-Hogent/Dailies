@@ -1,7 +1,10 @@
 ﻿// Robin Vermeir | Started: 05-04-2026
 
+using Microsoft.VisualBasic;
 using System.Buffers.Text;
+using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
@@ -13,6 +16,38 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Intersection of Two Sorted Arrays | 09-04-2026 | Day 5
+        // Given two sorted arrays a[] and b[], where each array may contain duplicate elements, return the elements in the intersection
+        // of the two arrays in sorted order.
+        // Note: Intersection of two arrays can be defined as the set containing distinct common elements that are present in both of the arrays.
+        public static List<int> intersection(int[] a, int[] b)
+        {
+            HashSet<int> result = new HashSet<int>();
+
+            bool expression = a.Length < b.Length;
+            int[] largest = expression ? a : b;
+            HashSet<int> smallest = new HashSet<int>(expression ? b : a);
+
+            foreach (int x in largest)
+            {
+                //if (result.Contains(x)) continue;
+
+                //foreach (int y in smallest)
+                //{
+                //    if (y != x) continue;
+                //    result.Add(x);
+                //    break;
+                //}
+
+                if (smallest.Contains(x))
+                {
+                    result.Add(x);
+                }
+            }
+
+            return result.ToList();
+        }
+
         // Segregate 0s and 1s | 08-04-2026 | Day 4
         // Given an array arr[] consisting of only 0's and 1's.Modify the array in-place to segregate 0s 
         // onto the left side and 1s onto the right side of the array.
