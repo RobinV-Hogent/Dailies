@@ -16,6 +16,48 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Sorted subsequence of size 3 | 10-04-2026 | Day 6
+        // Given an array arr[], find any subsequence of three elements such that, arr[i] < arr[j] < arr[k] and(i<j<k).
+           
+        // If such a subsequence exists, return the three elements as an array.Otherwise, return an empty array.
+           
+        // Note:
+           
+        // The driver code will print 1 if the returned subsequence is valid and present in the array.
+        // The driver code will print 0 if no such subsequence exists.
+        // If the returned subsequence does not satisfy the required format or conditions, the output will be -1.
+        public static List<int> find3Numbers(int[] arr)
+        {
+            // voor elk getal kijken naar de getallen rechts ervan
+            List<int> result = new List<int>();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                int currentNumber = arr[i];
+                result.Add(currentNumber);
+                
+                for (int j = i + 1; j < arr.Length; j++)
+                {
+                    if (arr[j] > currentNumber)
+                    {
+                        currentNumber = arr[j];
+                        result.Add(arr[j]);
+                        if(result.Count == 3) {
+                            Console.WriteLine(1);
+                            return result;
+                        }
+                    }
+                }
+
+                result.Clear();
+            }
+
+
+            Console.WriteLine(0);
+            return result;
+        }
+
+
         // Intersection of Two Sorted Arrays | 09-04-2026 | Day 5
         // Given two sorted arrays a[] and b[], where each array may contain duplicate elements, return the elements in the intersection
         // of the two arrays in sorted order.
