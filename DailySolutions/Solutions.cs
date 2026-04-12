@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -16,13 +17,43 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Toeplitz matrix | 12-04-2026 | Day 7
+        // A Toeplitz matrix(also known as a diagonal-constant matrix) is a matrix in which every descending diagonal from left to right contains the same element.
+
+        // Given a rectangular matrix mat, determine whether it is a Toeplitz matrix or not.
+        // Implement the function isToeplitz(mat) that returns:
+
+        // true if the matrix is a Toeplitz matrix
+        // false otherwise
+        public static bool isToeplitz(int[][] mat)
+        {
+            // Niet alle opvolgende arrays moeten gecheckt worden, alleen die na elkaar komen
+            for (int i = 0; i < mat.Length; i++)
+            {
+                if (i+1 > mat.Length-1) break;
+
+                int[] primary = mat[i];
+                int[] secondary = mat[i + 1];
+                
+                for (int j = 0; j < primary.Length - 1; j++)
+                {
+                    if (primary[j] != secondary[j + 1]) return false;
+                }
+            }
+
+            return true;
+        }
+
+
+
+
         // Sorted subsequence of size 3 | 10-04-2026 | Day 6
         // Given an array arr[], find any subsequence of three elements such that, arr[i] < arr[j] < arr[k] and(i<j<k).
-           
+
         // If such a subsequence exists, return the three elements as an array.Otherwise, return an empty array.
-           
+
         // Note:
-           
+
         // The driver code will print 1 if the returned subsequence is valid and present in the array.
         // The driver code will print 0 if no such subsequence exists.
         // If the returned subsequence does not satisfy the required format or conditions, the output will be -1.
