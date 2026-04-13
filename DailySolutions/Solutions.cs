@@ -10,6 +10,7 @@ using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -17,6 +18,30 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Next Smallest Palindrome | 13-04-2026 | Day 8
+        // Given a number, in the form of an array num[] containing digits from 1 to 9(inclusive). 
+        // Find the next smallest palindrome strictly larger than the given number.
+        public static int[] nextPalindrome(int[] num)
+        {
+            bool isPalindrome = true;
+
+            while (!isPalindrome)
+            {
+                for (int i = 0; i < Math.Floor((double)num.Length / 2); i++)
+                {
+                    if (num[i] != num[num.Length - 1 - i])
+                    {
+                        isPalindrome = false;
+                        break;
+                    }
+
+                    if (i == Math.Floor((double)num.Length / 2)) isPalindrome = true;
+                }
+            }
+            return [];
+        }
+
+
         // Toeplitz matrix | 12-04-2026 | Day 7
         // A Toeplitz matrix(also known as a diagonal-constant matrix) is a matrix in which every descending diagonal from left to right contains the same element.
 
@@ -30,11 +55,11 @@ namespace DailySolutions
             // Niet alle opvolgende arrays moeten gecheckt worden, alleen die na elkaar komen
             for (int i = 0; i < mat.Length; i++)
             {
-                if (i+1 > mat.Length-1) break;
+                if (i + 1 > mat.Length - 1) break;
 
                 int[] primary = mat[i];
                 int[] secondary = mat[i + 1];
-                
+
                 for (int j = 0; j < primary.Length - 1; j++)
                 {
                     if (primary[j] != secondary[j + 1]) return false;
@@ -66,14 +91,15 @@ namespace DailySolutions
             {
                 int currentNumber = arr[i];
                 result.Add(currentNumber);
-                
+
                 for (int j = i + 1; j < arr.Length; j++)
                 {
                     if (arr[j] > currentNumber)
                     {
                         currentNumber = arr[j];
                         result.Add(arr[j]);
-                        if(result.Count == 3) {
+                        if (result.Count == 3)
+                        {
                             Console.WriteLine(1);
                             return result;
                         }
