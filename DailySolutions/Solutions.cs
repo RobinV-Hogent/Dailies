@@ -23,21 +23,29 @@ namespace DailySolutions
         // Find the next smallest palindrome strictly larger than the given number.
         public static int[] nextPalindrome(int[] num)
         {
-            bool isPalindrome = true;
-
-            while (!isPalindrome)
+            // Voor elk getal in de array wil ik kijken naar de arr.length - i - 1
+            // Als getal groter is dan getal links van laatste getal + 1
+            // anders verander getal naar wat links staat
+            for (int i = 0; i < num.Length; i++)
             {
-                for (int i = 0; i < Math.Floor((double)num.Length / 2); i++)
-                {
-                    if (num[i] != num[num.Length - 1 - i])
-                    {
-                        isPalindrome = false;
-                        break;
-                    }
+                if (i - num.Length == 0) break;
 
-                    if (i == Math.Floor((double)num.Length / 2)) isPalindrome = true;
+                int left = num[i];
+                int right = num[num.Length - 1 - i];
+
+                if (right > left)
+                {
+                    num[num.Length - 1 - i] = left;
+                    num[num.Length - 1 - i - 1] = num[num.Length - 1 - i - 1] + 1;
+                }
+                else
+                {
+                    num[num.Length - 1 - i] = left;
                 }
             }
+
+            Console.WriteLine(string.Join(",", num));
+
             return [];
         }
 
