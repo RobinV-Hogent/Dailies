@@ -18,6 +18,20 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Remove Spaces | 14-04-2026 | Day 9
+        // Given a string s, remove all the spaces from the string and return the modified string.
+        public static string RemoveSpaces(string s)
+        {
+            string newText = "";
+
+            foreach (var ch in s)
+            {
+                if (!(ch == ' ')) newText += ch;
+            }
+
+            return newText;
+        }
+
         // Next Smallest Palindrome | 13-04-2026 | Day 8
         // Given a number, in the form of an array num[] containing digits from 1 to 9(inclusive). 
         // Find the next smallest palindrome strictly larger than the given number.
