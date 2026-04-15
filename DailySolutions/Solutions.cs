@@ -18,6 +18,21 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // URLify a given string | 15-04-2026 | Day 10
+        // Given a string s, replace all the spaces in the string with '%20'.
+        public static string URLify(string s)
+        {
+            string newText = "";
+
+            foreach (var ch in s)
+            {
+                if (ch == ' ') newText += "%20";
+                else newText += ch;
+            }
+
+            return newText;
+        }
+
         // Remove Spaces | 14-04-2026 | Day 9
         // Given a string s, remove all the spaces from the string and return the modified string.
         public static string RemoveSpaces(string s)
