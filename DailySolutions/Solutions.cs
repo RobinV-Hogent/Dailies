@@ -18,6 +18,56 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Given a string s, convert it into a 32-bit signed integer(similar to the atoi() function) without using any built-in conversion functions.
+        // The conversion follows these rules:
+
+        // Ignore Leading Whitespaces: Skip all leading whitespace characters.
+        // Check Sign: If the next character is either '+' or '-', take it as the sign of the number.If no sign is present, assume the number is positive.
+        // Read Digits: Read the digits and ignore any leading zeros. Stop reading when a non-digit character is encountered or the end of the string is reached.If no digits are found, return 0.
+        // Handle Overflow: If the number exceeds the range of a 32-bit signed integer:
+        // Return 2³¹ − 1 (i.e., 2147483647) if it is greater than the maximum value.
+        // Return −2³¹ (i.e., -2147483648) if it is smaller than the minimum value.
+        public static int myAtoi(string s)
+        {
+            char[] allowedChars = new char[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+
+            // This list does not show a 0;
+            int index = s.IndexOfAny(new char[] {'1', '2', '3', '4', '5', '6', '7', '8', '9'});
+            if(index == -1) return 0; // No digits found, return 0
+
+            int negativeIndex = s.IndexOf('-');
+            bool isNegative = negativeIndex != -1 && negativeIndex < index;
+
+            List<char> correct = new List<char>();
+            char currentChar = s[index];
+
+            while (allowedChars.Contains(currentChar))
+            {
+                correct.Add(currentChar);
+                index++;
+                if (index > s.Length - 1) break;
+                currentChar = s[index];
+            }
+
+            char[] final = correct.ToArray();
+            long total = 0;
+
+            for (int i = 1; i <= final.Length; i++)
+            {
+                long multiplier = (long)Math.Pow(10, i);
+                long value = long.Parse(final[final.Length - i].ToString());
+                total += multiplier * value;
+            }
+
+            total /= 10;
+            if (isNegative) total *= -1;
+
+            if (total < 0 && total < (long)int.MinValue) total = int.MinValue;
+            if (total > 0 && total > (long)int.MaxValue) total = int.MaxValue;
+
+            return (int)total;
+        }
+
         // URLify a given string | 15-04-2026 | Day 10
         // Given a string s, replace all the spaces in the string with '%20'.
         public static string URLify(string s)
