@@ -18,6 +18,7 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // MyAtoi | 16-04-2026 | Day 11
         // Given a string s, convert it into a 32-bit signed integer(similar to the atoi() function) without using any built-in conversion functions.
         // The conversion follows these rules:
 
