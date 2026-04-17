@@ -18,6 +18,24 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Anagram Palindrome | 17-04-2026 | Day 12
+        //Given a string s, determine whether its characters can be rearranged to form a palindrome.
+        //Return true if it is possible to rearrange the string into a palindrome; otherwise, return false.
+        public static bool canFormPalindrome(string s)
+        {
+            Dictionary<char, int> charCounts = new Dictionary<char, int>();
+
+            foreach (char ch in s)
+            {
+                if (charCounts.ContainsKey(ch)) charCounts[ch] = (charCounts[ch] + 1) % 2;
+                else charCounts[ch] = 1;
+            }
+
+            return charCounts.Values.Sum() <= 1;
+        }
+
+
+
         // MyAtoi | 16-04-2026 | Day 11
         // Given a string s, convert it into a 32-bit signed integer(similar to the atoi() function) without using any built-in conversion functions.
         // The conversion follows these rules:
