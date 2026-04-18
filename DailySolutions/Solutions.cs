@@ -24,6 +24,8 @@ namespace DailySolutions
         // A flip operation involves changing all 0's to 1's and all 1's to 0's within a contiguous subarray.
         // Formally, select a range(l, r) in the array arr[], such that(0 ≤ l ≤ r<n) holds and flip the elements in this range.
         // Return the maximum number of 1's you can get in the array after doing at most 1 flip operation.
+        // OVERCOMLICATED, but I loved the thought process and the solution I came up with, but its still wrong. 
+        
         public static int maxOnes(int[] arr)
         {
             Stack<int> stack = new Stack<int>(arr);
