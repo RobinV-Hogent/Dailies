@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text.RegularExpressions;
@@ -18,9 +19,66 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Flip to Maximize 1s | 18-04-2026 | Day 13
+        // Given an array arr[] consisting of 0’s and 1’s.
+        // A flip operation involves changing all 0's to 1's and all 1's to 0's within a contiguous subarray.
+        // Formally, select a range(l, r) in the array arr[], such that(0 ≤ l ≤ r<n) holds and flip the elements in this range.
+        // Return the maximum number of 1's you can get in the array after doing at most 1 flip operation.
+        public static int maxOnes(int[] arr)
+        {
+            Stack<int> stack = new Stack<int>(arr);
+            if (stack.Count == 1) return arr.Count(e => e == 1);
+
+            int[] indexes = new int[2];
+            int currentIndex = 0;
+            for (int i = 0; i < 2; i++)
+            {
+
+                int nextNum = stack.Pop();
+                currentIndex++;
+                int proceidingNum = stack.Peek();
+
+                while (nextNum == 1 || ((nextNum == 1 && proceidingNum == 0) || (nextNum == 0 && proceidingNum == 1)))
+                {
+                    if (((nextNum == 1 && proceidingNum == 0) || (nextNum == 0 && proceidingNum == 1)) && nextNum != 1)
+                    {
+                        stack.Pop();
+                        currentIndex++;
+                    }
+
+                    nextNum = stack.Pop();
+                    currentIndex++;
+                    if (stack.Count == 0) break;
+                    proceidingNum = stack.Peek();
+                }
+
+                stack.Push(nextNum);
+                indexes[i] = currentIndex - 1;
+                currentIndex = 0;
+
+                Array.Reverse(arr);
+                stack = new Stack<int>(arr);
+            }
+
+            // Because the stack reverses the array
+            indexes[0] = arr.Length - indexes[0];
+
+            // Convert to bool, easier to flip
+            bool[] boolArray = arr.Select(e => e == 1).ToArray();
+
+            // Flip numbers
+            for (int i = indexes[1]; i < indexes[0]; i++) boolArray[i] = !boolArray[i];
+
+            return boolArray.Count(true);
+        }
+
+
+
+
+
         // Anagram Palindrome | 17-04-2026 | Day 12
-        //Given a string s, determine whether its characters can be rearranged to form a palindrome.
-        //Return true if it is possible to rearrange the string into a palindrome; otherwise, return false.
+        // Given a string s, determine whether its characters can be rearranged to form a palindrome.
+        // Return true if it is possible to rearrange the string into a palindrome; otherwise, return false.
         public static bool canFormPalindrome(string s)
         {
             Dictionary<char, int> charCounts = new Dictionary<char, int>();
