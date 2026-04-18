@@ -63,15 +63,46 @@ namespace DailySolutions
             // Because the stack reverses the array
             indexes[0] = arr.Length - indexes[0];
 
+
+            int[] count = new int[2];
+            if (indexes[0] < indexes[1])
+            {
+                // Something went wrong, have to look at the edges
+                for (int i = 0; i < 2; i++)
+                {
+                    int idx = 0;
+                    while (arr[idx] == 0)
+                    {
+                        count[i]++;
+                        idx++;
+                    }
+
+                    Array.Reverse(arr);
+                }
+
+                // change left
+                if (count[0] > count[1])
+                {
+                    indexes[0] = 1;
+                    indexes[1] = 0;
+                }
+                else
+                {
+                    indexes[0] = arr.Length;
+                    indexes[1] = arr.Length - 1;
+                }
+            }
+
             // Convert to bool, easier to flip
             bool[] boolArray = arr.Select(e => e == 1).ToArray();
 
             // Flip numbers
             for (int i = indexes[1]; i < indexes[0]; i++) boolArray[i] = !boolArray[i];
 
+
+
             return boolArray.Count(true);
         }
-
 
 
 
@@ -106,11 +137,11 @@ namespace DailySolutions
         // Return −2³¹ (i.e., -2147483648) if it is smaller than the minimum value.
         public static int myAtoi(string s)
         {
-            char[] allowedChars = new char[] {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+            char[] allowedChars = new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
 
             // This list does not show a 0;
-            int index = s.IndexOfAny(new char[] {'1', '2', '3', '4', '5', '6', '7', '8', '9'});
-            if(index == -1) return 0; // No digits found, return 0
+            int index = s.IndexOfAny(new char[] { '1', '2', '3', '4', '5', '6', '7', '8', '9' });
+            if (index == -1) return 0; // No digits found, return 0
 
             int negativeIndex = s.IndexOf('-');
             bool isNegative = negativeIndex != -1 && negativeIndex < index;
