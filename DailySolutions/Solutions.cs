@@ -19,13 +19,27 @@ namespace DailySolutions
 {
     public class Solutions
     {
+        // Check for Power | 19-04-2026 | Day 14
+        // Given two positive integers x and y, determine if y is a power of x.
+        // If y is a power of x, return true. Otherwise, return false.
+        public static bool isPower(int x, int y)
+        {
+            if(y == 1) return true;
+            if(x > y) return false;
+
+            long calc = 1;
+            while(calc < y) calc *= x;
+
+            return calc == y;
+        }
+
         // Flip to Maximize 1s | 18-04-2026 | Day 13
         // Given an array arr[] consisting of 0’s and 1’s.
         // A flip operation involves changing all 0's to 1's and all 1's to 0's within a contiguous subarray.
         // Formally, select a range(l, r) in the array arr[], such that(0 ≤ l ≤ r<n) holds and flip the elements in this range.
         // Return the maximum number of 1's you can get in the array after doing at most 1 flip operation.
         // OVERCOMLICATED, but I loved the thought process and the solution I came up with, but its still wrong. 
-        
+
         public static int maxOnes(int[] arr)
         {
             Stack<int> stack = new Stack<int>(arr);
