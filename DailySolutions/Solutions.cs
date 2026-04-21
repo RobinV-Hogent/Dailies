@@ -3,13 +3,16 @@
 using Microsoft.VisualBasic;
 using System.Buffers.Text;
 using System.ComponentModel;
+using System.Diagnostics.Metrics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Numerics;
 using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
+using System.Runtime.InteropServices.Marshalling;
 using System.Text.RegularExpressions;
+using System.Timers;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
@@ -17,8 +20,96 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace DailySolutions
 {
-    public class Solutions
+    public static class Solutions
     {
+        // Two water Jug problem | 21-04-2026 | Day 15
+        // You are at the side of a river.You are given a m litre jug and a n litre jug.Both the jugs are initially empty. The jugs dont have markings to allow measuring smaller quantities. You have to use the jugs to measure d litres of water . Determine the minimum no of operations to be performed to obtain d litres of water in one of the jugs.
+        // The operations you can perform are:
+        // Empty a Jug
+        // Fill a Jug
+        // Pour water from one jug to the other until one of the jugs is either empty or full.
+        public static int waterJugs(int m, int n, int d)
+        {
+            int larger = m < n ? n : m;
+            int smaller = m < n ? m : n;
+
+            if(!(d <= larger)) return -1;
+
+            while (smaller != 0)
+            {
+                int remainder = larger % smaller;
+                larger = smaller;
+                smaller = remainder;
+            }
+
+            if (d % larger != 0) return -1;
+
+            larger = m < n ? n : m;
+            smaller = m < n ? m : n;
+
+            // Empty buckets
+            int bucket1 = 0; // Will be the larger one
+            int bucket2 = 0; // Will be the smaller one
+
+            int steps = 0;
+
+            while (!(bucket1 == d || bucket2 == d))
+            {
+                // If the larger bucket is empty, fill it
+                if(bucket1 == 0)
+                {
+                    bucket1 = larger;
+                    steps++;
+
+                    continue;
+                }
+
+                // Pour from larger to smaller until one of them is empty or full
+                if (bucket2 < smaller) {
+                    int diff = smaller - bucket2;
+                    diff = bucket1 < diff ? bucket1 : diff;
+                    bucket2 += diff;
+                    bucket1 -= diff;
+
+                    steps++;
+
+                    continue;
+                }
+
+                if(bucket2 == smaller)
+                {
+                    bucket2 = 0;
+                    steps++;
+
+                    continue;
+                }
+            }
+
+            return steps;
+        }
+
+
+        public static int derangeCount(int n)
+        {
+            //D(n) = (n−1)(D(n−1) + D(n−2))
+            if (n == 0) return 1;
+            if (n == 1) return 0;
+
+            int prev2 = 1;
+            int prev1 = 0;
+            int current = 0;
+
+            for (int i = 2; i <= n; i++)
+            {
+                // Formulie die ik gevonden heb
+                current = (i - 1) * (prev1 + prev2);
+                prev2 = prev1;
+                prev1 = current;
+            }
+
+            return current;
+        }
+
         // Check for Power | 19-04-2026 | Day 14
         // Given two positive integers x and y, determine if y is a power of x.
         // If y is a power of x, return true. Otherwise, return false.
