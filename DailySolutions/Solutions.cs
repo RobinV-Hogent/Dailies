@@ -22,6 +22,35 @@ namespace DailySolutions
 {
     public static class Solutions
     {
+        // Mean of range in array | 22-04-2026 | Day 16
+        // Given an integer array arr[] and a 2D array queries[][]. 
+        // Each query queries[i] = [l, r] represents a subarray ranging from index l to r(inclusive).For every query, 
+        // compute the mean(average) of the elements in the specified range, and return the floor value of that mean.
+        public static List<int> findMean(int[] arr, int[][] queries)
+        {
+            List<int> result = new List<int>();
+
+            int begin = 0;
+            int end = 0;
+            int total = 0;
+            foreach (int[] query in queries)
+            {
+                begin = query[0];
+                end = query[1];
+                total = 0;
+
+                for (int i = begin; i <= end; i++)
+                {
+                    total += arr[i];
+                }
+
+                result.Add((int)(total/(end-begin+1)));
+            }
+
+            return result;
+        }
+
+
         // Two water Jug problem | 21-04-2026 | Day 15
         // You are at the side of a river.You are given a m litre jug and a n litre jug.Both the jugs are initially empty. The jugs dont have markings to allow measuring smaller quantities. You have to use the jugs to measure d litres of water . Determine the minimum no of operations to be performed to obtain d litres of water in one of the jugs.
         // The operations you can perform are:
