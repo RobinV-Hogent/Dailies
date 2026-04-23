@@ -22,6 +22,32 @@ namespace DailySolutions
 {
     public static class Solutions
     {
+        // Two Equal Sum Subarrays | 23-04-2026 | Day 17
+        // Given an array of integers arr[], return true if it is possible to split it in two 
+        // subarrays(without reordering the elements), such that the sum of the two subarrays are equal.
+        // If it is not possible then return false.
+        public static bool canSplit(int[] arr)
+        {
+            int total = 0;
+            foreach (int item in arr) total += item;
+            double half = (double)total / 2;
+
+            // Guard
+            if(half % 1 != 0) return false;
+
+            int currentSum = 0;
+
+            for (int i = 0; i < arr.Length - 1; i++)
+            {
+                currentSum += arr[i];
+                if(currentSum == half) return true;
+                if(currentSum > half) return false;
+            }
+
+            return false;
+        }
+
+
         // Mean of range in array | 22-04-2026 | Day 16
         // Given an integer array arr[] and a 2D array queries[][]. 
         // Each query queries[i] = [l, r] represents a subarray ranging from index l to r(inclusive).For every query, 
