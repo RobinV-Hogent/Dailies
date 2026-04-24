@@ -22,6 +22,29 @@ namespace DailySolutions
 {
     public static class Solutions
     {
+        // Buildings with Sunlight | 24-04-2026 | Day 18
+        // Given the array arr[] of heights of certain buildings that lie adjacent to each other, Sunlight starts
+        // falling from the left side of the buildings. If there is a building of a certain height,
+        // all the buildings to the right side of it having lesser heights cannot see the sun.
+        // Find the total number of buildings that receive sunlight.
+        public static int visibleBuildings(int[] arr)
+        {
+            int highest = arr[0];
+            int amountOfBuildingsThatSeeSun = 0;
+
+            foreach (var buildingHeight in arr)
+            {
+                if(buildingHeight >= highest)
+                {
+                    highest = buildingHeight;
+                    amountOfBuildingsThatSeeSun++;
+                }
+            }
+
+            return amountOfBuildingsThatSeeSun;
+        }
+
+
         // Two Equal Sum Subarrays | 23-04-2026 | Day 17
         // Given an array of integers arr[], return true if it is possible to split it in two 
         // subarrays(without reordering the elements), such that the sum of the two subarrays are equal.
