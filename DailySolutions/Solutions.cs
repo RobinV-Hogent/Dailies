@@ -22,18 +22,58 @@ namespace DailySolutions
 {
     public static class Solutions
     {
+
+        // Opposite Sign Pair Reduction | 25-04-2026 | Day 19
+        // Given an array arr[] , return the final array by repeatedly apply the following operation from 
+        // left to right until no more valid operations can be performed.
+        // If two adjacent elements have opposite signs:
+        // If their absolute values are different, 
+        // remove both elements and insert the one with the greater absolute value, preserving its sign.       
+        // If their absolute values are equal, remove both elements without inserting any new element.
+        public static List<int> reducePairs(int[] arr) {
+          
+          List<int> reduction = new List<int>();
+          int? lastElement = null;
+
+          for (int i = 0; i < arr.Length - 1; i++)
+          {
+              int curr = lastElement != null ? (int)lastElement : (int)arr[i];
+              int next = arr[i+1];
+              int nextabs = Math.Abs(next);
+              int currabs = Math.Abs(curr);
+
+              // If value is negative then one value is < 0 and the other > 0
+              if((curr % 2) * (next % 2) <= 0) {
+                int val = Math.Abs(curr) > Math.Abs(next) ? curr : next;
+                reduction.Add(val);
+                lastElement = val;
+              }
+              else if (nextabs != currabs) {
+
+                if (lastElement == null)
+                {
+                    reduction.Add(curr);
+                }
+                    
+                reduction.Add(next);
+                lastElement = next;
+                i++;
+              }
+          } 
+          
+          return reduction;
+        }
+        
         // Buildings with Sunlight | 24-04-2026 | Day 18
         // Given the array arr[] of heights of certain buildings that lie adjacent to each other, Sunlight starts
         // falling from the left side of the buildings. If there is a building of a certain height,
-        // all the buildings to the right side of it having lesser heights cannot see the sun.
         // Find the total number of buildings that receive sunlight.
         public static int visibleBuildings(int[] arr)
         {
             int highest = arr[0];
             int amountOfBuildingsThatSeeSun = 0;
 
-            foreach (var buildingHeight in arr)
-            {
+            foreach (var buildingHeight in arr) {
                 if(buildingHeight >= highest)
                 {
                     highest = buildingHeight;
@@ -41,9 +81,8 @@ namespace DailySolutions
                 }
             }
 
-            return amountOfBuildingsThatSeeSun;
+            return amountOfBuildingsThatSeeSun; 
         }
-
 
         // Two Equal Sum Subarrays | 23-04-2026 | Day 17
         // Given an array of integers arr[], return true if it is possible to split it in two 
