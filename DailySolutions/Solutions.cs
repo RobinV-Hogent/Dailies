@@ -22,6 +22,32 @@ namespace DailySolutions
 {
     public static class Solutions
     {
+        // Common in 3 Sorted Arrays | 26-04-2026 | Day 20
+        // Given three sorted arrays in non-decreasing order, 
+        // return all common elements in non-decreasing order across these arrays.
+        // If there are no such elements return an empty array.
+        public static List<int> commonElements(int[] a, int[] b, int[] c)
+        {
+            HashSet<int> setA = new HashSet<int>(a);
+            HashSet<int> setB = new HashSet<int>(b);
+            HashSet<int> setC = new HashSet<int>(c);
+
+            int al = a.Length;
+            int bl = b.Length;
+            int cl = c.Length;
+            HashSet<int> common = new HashSet<int>();
+
+            int[] smallest = al < bl ? (al < cl ? a : c) : (bl < cl ? b : c);
+
+            for (int i = 0; i < smallest.Length; i++) 
+            {
+                int num = smallest[i];
+                if (setA.Contains(num) && setB.Contains(num) && setC.Contains(num)) common.Add(num);
+            }
+
+            return common.ToList();
+        }
+
 
         // Opposite Sign Pair Reduction | 25-04-2026 | Day 19
         // Given an array arr[] , return the final array by repeatedly apply the following operation from 
